@@ -53,7 +53,7 @@ public class PhotoListGalleryFragment extends Fragment {
                 .findViewById(R.id.fragment_photo_list_gallery_recycler_view);
 //        mLinearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
 //        mLinearLayoutManager = new LinearLayoutManager(getActivity());
-        mGridLayoutManager = new GridLayoutManager(getActivity(), 3);
+        mGridLayoutManager = new GridLayoutManager(getActivity(), 2);
         mPhotoListRecyclerView.setLayoutManager(mGridLayoutManager);
 
         setupAdapter();
@@ -71,6 +71,7 @@ public class PhotoListGalleryFragment extends Fragment {
                 implements View.OnClickListener {
         private ImageView mItemImageView;
         private TextView mTitleTextView;
+        private TextView mTitleTextView2;
         private final Uri ENDPOINT = Uri
                 .parse("http://www.google.com/");
 
@@ -79,6 +80,8 @@ public class PhotoListGalleryFragment extends Fragment {
 
             mTitleTextView = (TextView) itemView
                     .findViewById(R.id.fragment_photo_list_gallery_text_view);
+            mTitleTextView2 = (TextView) itemView
+                    .findViewById(R.id.fragment_photo_list_gallery_text_view2);
             mItemImageView = (ImageView) itemView
                     .findViewById(R.id.fragment_photo_list_gallery_image_view);
             itemView.setOnClickListener(this);
@@ -88,8 +91,9 @@ public class PhotoListGalleryFragment extends Fragment {
 //            mTitleTextView.setText(item.toString());
 //        }
 
-        public void bindGalleryItem(String tagline) {
+        public void bindGalleryItem(String tagline, String rsa) {
             mTitleTextView.setText(tagline);
+            mTitleTextView2.setText(rsa);
         }
 
         public void bindDrawable(Drawable drawable) {
@@ -123,8 +127,9 @@ public class PhotoListGalleryFragment extends Fragment {
         public void onBindViewHolder(PhotoHolder photoHolder, int position) {
             GalleryItem galleryItem = mGalleryItems.get(position);
             String tagLine = "Big Orange Beaver";
-            photoHolder.bindGalleryItem(tagLine);
-            Drawable placeholder = getResources().getDrawable(R.drawable.betty_up_close);
+            String rating = "rating: 4.9 ONLINE age: 19";
+            photoHolder.bindGalleryItem(tagLine, rating);
+            Drawable placeholder = getResources().getDrawable(R.drawable.bill_up_close);
             photoHolder.bindDrawable(placeholder);
 //            photoHolder.bindGalleryItem(galleryItem);
         }
