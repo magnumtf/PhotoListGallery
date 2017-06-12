@@ -6,6 +6,7 @@ package com.buber.photolistgallery;
 
 public class GalleryItem {
     private String mCaption;
+    private String mComment;
     private String mId;
     private String mUrl;
 
@@ -31,6 +32,14 @@ public class GalleryItem {
 
     public void setUrl(String url) {
         this.mUrl = url;
+    }
+
+    public String getComment() {
+        return mComment;
+    }
+
+    public void setComment(String mComment) {
+        this.mComment = mComment;
     }
 
     @Override

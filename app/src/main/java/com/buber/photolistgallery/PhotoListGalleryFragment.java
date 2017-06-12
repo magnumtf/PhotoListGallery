@@ -1,21 +1,31 @@
 package com.buber.photolistgallery;
 
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.EditText;
+import android.widget.TextView.OnEditorActionListener;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -32,6 +42,7 @@ public class PhotoListGalleryFragment extends Fragment {
     private LinearLayoutManager mLinearLayoutManager;
     private GridLayoutManager mGridLayoutManager;
     private List<GalleryItem> mItems = new ArrayList<>();
+    private Toolbar mMainToolbar;
 
     public static PhotoListGalleryFragment newInstance() {
         return new PhotoListGalleryFragment();
@@ -40,8 +51,34 @@ public class PhotoListGalleryFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ActionBar actionBar = ((AppCompatActivity)getActivity()).getSupportActionBar();
+        // add the custom view to the action bar
+        actionBar.setCustomView(R.layout.actionbar_view);
+        actionBar.setBackgroundDrawable(new ColorDrawable(0x00ffffff));
+/*
+        EditText search = (EditText) actionBar.getCustomView().findViewById(R.id.searchfield);
+        search.setOnEditorActionListener(new OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId,
+                                          KeyEvent event) {
+                Toast.makeText(getActivity(), "Search triggered", Toast.LENGTH_LONG).show();
+                return false;
+            }
+        });
+*/
+        // DISPLAY_SHOW_TITLE
+        actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM
+                | ActionBar.DISPLAY_SHOW_HOME);
+        actionBar.setTitle("CATSBIGVAG");
         setRetainInstance(true);
+        setHasOptionsMenu(true);
         new FetchItemsTask().execute();
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater menuInflater) {
+        super.onCreateOptionsMenu(menu, menuInflater);
+//        menuInflater.inflate(R.menu.fragment_photo_list_gallery, menu);
     }
 
     @Override
@@ -55,6 +92,13 @@ public class PhotoListGalleryFragment extends Fragment {
 //        mLinearLayoutManager = new LinearLayoutManager(getActivity());
         mGridLayoutManager = new GridLayoutManager(getActivity(), 2);
         mPhotoListRecyclerView.setLayoutManager(mGridLayoutManager);
+
+
+//        mMainToolbar = (Toolbar) findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
+//        ...
+//        TextView myTitle = (TextView) toolbar.getChildAt(0);
+//        myTitle.setTypeface(font);
 
         setupAdapter();
 
@@ -111,9 +155,11 @@ public class PhotoListGalleryFragment extends Fragment {
 
     private class PhotoAdapter extends RecyclerView.Adapter<PhotoHolder> {
         private List<GalleryItem> mGalleryItems;
+        private boolean mSafeMode;
 
         public PhotoAdapter(List<GalleryItem> galleryItems) {
             mGalleryItems = galleryItems;
+            mSafeMode = true;
         }
 
         @Override
@@ -130,6 +176,9 @@ public class PhotoListGalleryFragment extends Fragment {
             String rating = "rating: 4.9 ONLINE age: 19";
             photoHolder.bindGalleryItem(tagLine, rating);
             Drawable placeholder = getResources().getDrawable(R.drawable.bill_up_close);
+            if (mSafeMode) {
+                placeholder = getResources().getDrawable(R.drawable.circle_eyeball1);
+            }
             photoHolder.bindDrawable(placeholder);
 //            photoHolder.bindGalleryItem(galleryItem);
         }

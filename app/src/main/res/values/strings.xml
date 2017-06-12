@@ -1,9 +1,30 @@
 <resources>
-    <string name="app_name">PhotoListGallery</string>
-    <string name="button_text">Change Image</string>
+    <string name="app_name">BUBER</string>
+    <string name="button_text">Call Driver ...</string>
+    <string name="sched_button_text">Schedule Appt ...</string>
     <string name="default_text_view">Cynthia\'s Big Vag!</string>
     <string name="next_image_text_view">Jess\'s Big Ole Titties!</string>
     <string name="tag_line">Big Red Beaver</string>
     <string name="tag_line_default_to_name">Savannah Summertime</string>
     <string name="rating_status_age">rating: 4.5 ONLINE age: 23</string>
+    <string name="name_0">Big Orange Bill</string>
+    <string name="name_1">Betty Butt</string>
+    <string name="name_2">Bickle Behave</string>
+    <string name="name_3">Jandy Jan Glass</string>
+    <string name="name_4">Tara Clam Slip Hawkins</string>
+    <string name="comment_0">This dude is really orange!</string>
+    <string name="comment_1">Betty has a nice big juicy ass!</string>
+    <string name="comment_2">Bickle is very tasty!</string>
+    <string name="comment_3">Holy wowsa!</string>
+    <string name="comment_4">She showed me her feet and I was like Boner Time!</string>
+    <string name="detailed_m_0">I am an attractive, orange dude!</string>
+    <string name="detailed_m_1">They call me Betty and they call my ass Big and Juicy, lol!</string>
+    <string name="detailed_m_2">My name is Bickle and I am very tasty!</string>
+    <string name="detailed_m_3">What can I say - Beaver City!</string>
+    <string name="detailed_m_4">Lick my feet and stop looking at my beaver!</string>
+    <string name="long_comment_test">
+        You have to try it to understand how different and better this roller is compared to traditional foam rollers. The material is high grade which leaves no concern for breaking down. The different settings for the intensity is well balanced and the range is manageable between levels. Charging is relatively quick and holds pretty decent charge. My only concern, unfounded mind you, is how long will the vibration mechanism hold up.
+    </string>
+    <string name="search">Search</string>
+    <string name="clear_search">Clear Search</string>
 </resources>

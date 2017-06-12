@@ -5,6 +5,14 @@
     android:layout_height="fill_parent"
     android:orientation="vertical">
 
+    <TextView
+        android:id="@+id/fragment_photo_page_text_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textSize="18sp"
+        android:text="@string/default_text_view"/>
+
     <ImageView
         android:id="@+id/fragment_photo_page_image_view"
         android:layout_width="match_parent"
@@ -12,16 +20,60 @@
         android:src="@drawable/betty_up_close"/>
 
     <TextView
-        android:id="@+id/fragment_photo_page_text_view"
+        android:id="@+id/fragment_photo_page_text_detailed_message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:typeface="normal"
         android:text="@string/default_text_view"/>
 
-    <Button
-        android:id="@+id/btn_change_image"
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="2dp"
+        android:background="?android:attr/dividerHorizontal" />
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/button_text" />
+        android:orientation="horizontal"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp" >
+
+        <Button
+            android:id="@+id/btn_change_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:drawableTop="@drawable/ic_time_to_leave_pink_24dp"
+            android:text="@string/button_text"
+            android:textSize="10sp" />
+
+        <Button
+            android:id="@+id/btn_schedule_appt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:drawableTop="@drawable/agenda_kegiatan3_pink"
+            android:text="@string/sched_button_text"
+            android:textSize="10sp" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="2dp"
+        android:background="?android:attr/dividerHorizontal" />
+
+    <TextView
+        android:id="@+id/fragment_photo_page_text_comment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:fontFamily="sans-serif-condensed"
+        android:typeface="monospace"
+        android:text="@string/default_text_view"/>
+
 
 </LinearLayout>
