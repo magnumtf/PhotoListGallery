@@ -1,5 +1,60 @@
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/fragment_container"
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"/>
+    android:layout_height="match_parent">
+<!--LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--    android:orientation="vertical"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent">-->
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/myToolbar"
+            android:minHeight="?attr/actionBarSize"
+            android:background="@color/colorToolbarBackground"
+            android:layout_width="match_parent"
+            android:layout_height="64dp">
+
+            <ImageButton
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:id="@+id/menu_image_button"
+                android:layout_gravity="left"
+                android:background="?android:selectableItemBackground"
+                android:onClick="scrollToTop"
+                android:src="@drawable/ic_menu_48px3"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/app_name"
+                android:textSize="24sp"
+                android:layout_gravity="center"
+                android:id="@+id/toolbar_title" />
+        </android.support.v7.widget.Toolbar>
+
+        <FrameLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/fragment_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/myToolbar">
+        </FrameLayout>
+
+        <LinearLayout
+            android:id="@+id/overlay"
+            android:layout_width="200dp"
+            android:layout_height="fill_parent"
+            android:background="#99000000"
+            android:clickable="true"
+            android:visibility="gone">
+
+            <EditText android:id="@+id/edittext"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_margin="50dp" />
+
+        </LinearLayout>
+
+</RelativeLayout>

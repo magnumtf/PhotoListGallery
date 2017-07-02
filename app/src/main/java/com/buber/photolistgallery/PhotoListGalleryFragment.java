@@ -51,10 +51,11 @@ public class PhotoListGalleryFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ActionBar actionBar = ((AppCompatActivity)getActivity()).getSupportActionBar();
+/* mtf, actionbar work 6/14        ActionBar actionBar = ((AppCompatActivity)getActivity()).getSupportActionBar();
         // add the custom view to the action bar
         actionBar.setCustomView(R.layout.actionbar_view);
         actionBar.setBackgroundDrawable(new ColorDrawable(0x00ffffff));
+*/
 /*
         EditText search = (EditText) actionBar.getCustomView().findViewById(R.id.searchfield);
         search.setOnEditorActionListener(new OnEditorActionListener() {
@@ -67,9 +68,13 @@ public class PhotoListGalleryFragment extends Fragment {
         });
 */
         // DISPLAY_SHOW_TITLE
+/* mtf, actionbar work 6/14
         actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM
                 | ActionBar.DISPLAY_SHOW_HOME);
         actionBar.setTitle("CATSBIGVAG");
+*/
+//        setSupportActionBar(myToolbar);
+
         setRetainInstance(true);
         setHasOptionsMenu(true);
         new FetchItemsTask().execute();

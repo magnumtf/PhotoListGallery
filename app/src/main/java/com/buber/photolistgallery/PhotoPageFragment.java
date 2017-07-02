@@ -1,8 +1,12 @@
 package com.buber.photolistgallery;
 
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,6 +46,29 @@ public class PhotoPageFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+/* mtf action bar work 6/14        ActionBar actionBar = ((AppCompatActivity)getActivity()).getSupportActionBar();
+        // add the custom view to the action bar
+        actionBar.setCustomView(R.layout.actionbar_view);
+        actionBar.setBackgroundDrawable(new ColorDrawable(0x00ffffff));
+*/
+/*
+        EditText search = (EditText) actionBar.getCustomView().findViewById(R.id.searchfield);
+        search.setOnEditorActionListener(new OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId,
+                                          KeyEvent event) {
+                Toast.makeText(getActivity(), "Search triggered", Toast.LENGTH_LONG).show();
+                return false;
+            }
+        });
+*/
+        // DISPLAY_SHOW_TITLE
+/* mtf action bar work 6/14
+        actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM
+                | ActionBar.DISPLAY_SHOW_HOME);
+        actionBar.setTitle("CATSBIGVAG");
+*/
+
         mUri = getArguments().getParcelable(ARG_URI);
         setRetainInstance(true);
         mSetDefaultImage = false;
