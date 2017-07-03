@@ -12,7 +12,7 @@
             android:minHeight="?attr/actionBarSize"
             android:background="@color/colorToolbarBackground"
             android:layout_width="match_parent"
-            android:layout_height="64dp">
+            android:layout_height="56dp">
 
             <ImageButton
                 android:layout_height="wrap_content"
@@ -39,20 +39,21 @@
             android:id="@+id/fragment_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:foreground="@drawable/shape_window_dim"
             android:layout_below="@id/myToolbar">
         </FrameLayout>
 
         <LinearLayout
             android:id="@+id/overlay"
-            android:layout_width="200dp"
-            android:layout_height="fill_parent"
-            android:background="#99000000"
+            android:layout_width="250dp"
+            android:layout_height="match_parent"
+            android:background="#BA000000"
             android:clickable="true"
             android:visibility="gone">
 
             <EditText android:id="@+id/edittext"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_margin="50dp" />
 
         </LinearLayout>

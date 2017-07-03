@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
@@ -15,6 +16,7 @@ public abstract class SingleFragmentActivity extends AppCompatActivity {
     private static final String TAG = "SingleFragementActivity";
     private ImageButton mMenuImage;
     private LinearLayout mMenuOverlay;
+    private FrameLayout mFragmentFrame;
 
     protected abstract Fragment createFragment();
 
@@ -22,7 +24,6 @@ public abstract class SingleFragmentActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fragment);
-
         setTitle(null);
 
         Toolbar topToolBar = (Toolbar)findViewById(R.id.myToolbar);
@@ -39,11 +40,13 @@ public abstract class SingleFragmentActivity extends AppCompatActivity {
         }
 
         mMenuOverlay = (LinearLayout) findViewById(R.id.overlay);
-
+        mFragmentFrame = (FrameLayout) findViewById(R.id.fragment_container);
+        mFragmentFrame.getForeground().setAlpha(0);
     }
 
     public void scrollToTop(View v) {
         Log.d(TAG, "scrollToTop() called");
         mMenuOverlay.setVisibility(View.VISIBLE);
+        mFragmentFrame.getForeground().setAlpha(150);
     }
 }
