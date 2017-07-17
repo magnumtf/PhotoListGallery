@@ -20,7 +20,7 @@ import static com.buber.photolistgallery.R.drawable.ladybaby1;
  * Created by Than on 1/12/2017.
  */
 
-public class PhotoPageFragment extends Fragment {
+public class PhotoPageFragment extends Fragment implements MenuVisible {
     private static final String TAG = "PhotoPageFragment";
     private static final String ARG_URI = "photo_page_url";
 
@@ -33,6 +33,7 @@ public class PhotoPageFragment extends Fragment {
     private Button mChangeImageButton;
     private boolean mSetDefaultImage;
     private boolean mSafeMode;
+    private boolean mMenuVisible;
 
     public static PhotoPageFragment newInstance(Uri uri) {
         Bundle args = new Bundle();
@@ -46,29 +47,6 @@ public class PhotoPageFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-/* mtf action bar work 6/14        ActionBar actionBar = ((AppCompatActivity)getActivity()).getSupportActionBar();
-        // add the custom view to the action bar
-        actionBar.setCustomView(R.layout.actionbar_view);
-        actionBar.setBackgroundDrawable(new ColorDrawable(0x00ffffff));
-*/
-/*
-        EditText search = (EditText) actionBar.getCustomView().findViewById(R.id.searchfield);
-        search.setOnEditorActionListener(new OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId,
-                                          KeyEvent event) {
-                Toast.makeText(getActivity(), "Search triggered", Toast.LENGTH_LONG).show();
-                return false;
-            }
-        });
-*/
-        // DISPLAY_SHOW_TITLE
-/* mtf action bar work 6/14
-        actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM
-                | ActionBar.DISPLAY_SHOW_HOME);
-        actionBar.setTitle("CATSBIGVAG");
-*/
-
         mUri = getArguments().getParcelable(ARG_URI);
         setRetainInstance(true);
         mSetDefaultImage = false;
@@ -106,7 +84,9 @@ public class PhotoPageFragment extends Fragment {
         mChangeImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                if (mSetDefaultImage) {
+                if (mMenuVisible)
+                    ;
+                else if (mSetDefaultImage) {
                     if (mSafeMode) {
                         mPhotoImageView.setImageResource(R.drawable.poncho1);
                     } else {
@@ -131,6 +111,10 @@ public class PhotoPageFragment extends Fragment {
         }
         );
         return v;
+    }
+
+    public void setMenuVisible(boolean menuVis) {
+        mMenuVisible = menuVis;
     }
 
     // next set up listener and add a juicy image!

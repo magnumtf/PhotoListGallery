@@ -35,14 +35,14 @@ import java.util.List;
  * Created by Than on 1/5/2017.
  */
 
-public class PhotoListGalleryFragment extends Fragment {
+public class PhotoListGalleryFragment extends Fragment implements MenuVisible {
     private static final String TAG = "PhotoLGFragment";
 
     private RecyclerView mPhotoListRecyclerView;
-    private LinearLayoutManager mLinearLayoutManager;
+//    private LinearLayoutManager mLinearLayoutManager;
     private GridLayoutManager mGridLayoutManager;
     private List<GalleryItem> mItems = new ArrayList<>();
-    private Toolbar mMainToolbar;
+    private boolean mMenuVisible;
 
     public static PhotoListGalleryFragment newInstance() {
         return new PhotoListGalleryFragment();
@@ -51,39 +51,8 @@ public class PhotoListGalleryFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-/* mtf, actionbar work 6/14        ActionBar actionBar = ((AppCompatActivity)getActivity()).getSupportActionBar();
-        // add the custom view to the action bar
-        actionBar.setCustomView(R.layout.actionbar_view);
-        actionBar.setBackgroundDrawable(new ColorDrawable(0x00ffffff));
-*/
-/*
-        EditText search = (EditText) actionBar.getCustomView().findViewById(R.id.searchfield);
-        search.setOnEditorActionListener(new OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId,
-                                          KeyEvent event) {
-                Toast.makeText(getActivity(), "Search triggered", Toast.LENGTH_LONG).show();
-                return false;
-            }
-        });
-*/
-        // DISPLAY_SHOW_TITLE
-/* mtf, actionbar work 6/14
-        actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM
-                | ActionBar.DISPLAY_SHOW_HOME);
-        actionBar.setTitle("CATSBIGVAG");
-*/
-//        setSupportActionBar(myToolbar);
-
         setRetainInstance(true);
-        setHasOptionsMenu(true);
         new FetchItemsTask().execute();
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater menuInflater) {
-        super.onCreateOptionsMenu(menu, menuInflater);
-//        menuInflater.inflate(R.menu.fragment_photo_list_gallery, menu);
     }
 
     @Override
@@ -93,18 +62,9 @@ public class PhotoListGalleryFragment extends Fragment {
 
         mPhotoListRecyclerView = (RecyclerView) v
                 .findViewById(R.id.fragment_photo_list_gallery_recycler_view);
-//        mLinearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
-//        mLinearLayoutManager = new LinearLayoutManager(getActivity());
         mGridLayoutManager = new GridLayoutManager(getActivity(), 2);
         mPhotoListRecyclerView.setLayoutManager(mGridLayoutManager);
-
-
-//        mMainToolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
-//        ...
-//        TextView myTitle = (TextView) toolbar.getChildAt(0);
-//        myTitle.setTypeface(font);
-
+        mMenuVisible = false;
         setupAdapter();
 
         return v;
@@ -114,6 +74,10 @@ public class PhotoListGalleryFragment extends Fragment {
         if (isAdded()) {
             mPhotoListRecyclerView.setAdapter(new PhotoAdapter(mItems));
         }
+    }
+
+    public void setMenuVisible(boolean visible) {
+        mMenuVisible = visible;
     }
 
     private class PhotoHolder extends RecyclerView.ViewHolder
@@ -136,9 +100,9 @@ public class PhotoListGalleryFragment extends Fragment {
             itemView.setOnClickListener(this);
         }
 
-//        public void bindGalleryItem(GalleryItem item) {
-//            mTitleTextView.setText(item.toString());
-//        }
+        //        public void bindGalleryItem(GalleryItem item) {
+        //            mTitleTextView.setText(item.toString());
+        //        }
 
         public void bindGalleryItem(String tagline, String rsa) {
             mTitleTextView.setText(tagline);
@@ -151,11 +115,14 @@ public class PhotoListGalleryFragment extends Fragment {
 
         @Override
         public void onClick(View v) {
-// implicit, dont use            Intent i = new Intent(Intent.ACTION_VIEW, ENDPOINT);
-            Intent i = PhotoPageActivity
-                    .newIntent(getActivity(), ENDPOINT);
-            startActivity(i);
+            // implicit, dont use            Intent i = new Intent(Intent.ACTION_VIEW, ENDPOINT);
+            if (!mMenuVisible) {
+                Intent i = PhotoPageActivity
+                        .newIntent(getActivity(), ENDPOINT);
+                startActivity(i);
+            }
         }
+
     }
 
     private class PhotoAdapter extends RecyclerView.Adapter<PhotoHolder> {

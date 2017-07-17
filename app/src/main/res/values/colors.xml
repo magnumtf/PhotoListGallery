@@ -4,4 +4,7 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="colorToolbarBackground">#FFFFFF</color>
+    <color name="colorToolbarOverlay">#808080</color>
+    <color name="colorTextOverlayName">#FFFFFF</color>
+    <color name="colorTextOverlayItems">#3366DC</color>
 </resources>

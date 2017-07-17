@@ -20,7 +20,7 @@
                 android:id="@+id/menu_image_button"
                 android:layout_gravity="left"
                 android:background="?android:selectableItemBackground"
-                android:onClick="scrollToTop"
+                android:onClick="onDisplayMenuOverlay"
                 android:src="@drawable/ic_menu_48px3"
                 />
 
@@ -48,13 +48,124 @@
             android:layout_width="250dp"
             android:layout_height="match_parent"
             android:background="#BA000000"
-            android:clickable="true"
+            android:orientation="vertical"
             android:visibility="gone">
 
-            <EditText android:id="@+id/edittext"
+            <RelativeLayout
+                xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="50dp" />
+                android:layout_height="150dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/useravatar_overlay_menu"
+                    android:src="@drawable/default_avatarab_pt5ab"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:foregroundGravity="center"
+                    android:text="@string/no_image_available" />
+
+
+                <TextView
+                    android:id="@+id/username_overlay_menu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_toRightOf="@id/useravatar_overlay_menu"
+                    android:gravity="center"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorTextOverlayName"
+                    android:text="Chase Ryderstein" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="#FF00FF00" />
+
+            <TextView
+                android:id="@+id/payment_settings_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorTextOverlayItems"
+                android:textSize="18sp"
+                android:fontFamily="sans-serif-condensed"
+                android:padding="12dp"
+                android:onClick="onPaymentMethod"
+                android:text="@string/payment_method" />
+
+            <TextView
+                android:id="@+id/your_trips_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorTextOverlayItems"
+                android:textSize="18sp"
+                android:fontFamily="sans-serif-condensed"
+                android:padding="12dp"
+                android:onClick="onYourTrips"
+                android:text="@string/your_trips" />
+
+            <TextView
+                android:id="@+id/free_rides_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorTextOverlayItems"
+                android:textSize="18sp"
+                android:fontFamily="sans-serif-condensed"
+                android:padding="12dp"
+                android:onClick="onFreeRides"
+                android:text="@string/free_rides" />
+
+            <TextView
+                android:id="@+id/help_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorTextOverlayItems"
+                android:textSize="18sp"
+                android:fontFamily="sans-serif-condensed"
+                android:padding="12dp"
+                android:onClick="onNeedHelp"
+                android:text="@string/help" />
+
+            <TextView
+                android:id="@+id/settings_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorTextOverlayItems"
+                android:textSize="18sp"
+                android:fontFamily="sans-serif-condensed"
+                android:padding="12dp"
+                android:onClick="onGoToSettings"
+                android:text="@string/settings" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="#FF00FF00" />
+
+            <TextView
+                android:id="@+id/drive_with_buber_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorTextOverlayItems"
+                android:textSize="18sp"
+                android:fontFamily="sans-serif-condensed"
+                android:padding="12dp"
+                android:onClick="onDriveWithBuber"
+                android:text="@string/drive_with_buber" />
+
+            <TextView
+                android:id="@+id/legal_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorTextOverlayItems"
+                android:textSize="18sp"
+                android:fontFamily="sans-serif-condensed"
+                android:padding="12dp"
+                android:onClick="onLegal"
+                android:text="@string/legal" />
 
         </LinearLayout>
 

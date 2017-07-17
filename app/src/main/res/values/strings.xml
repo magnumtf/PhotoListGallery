@@ -27,4 +27,14 @@
     </string>
     <string name="search">Search</string>
     <string name="clear_search">Clear Search</string>
+    <string name="payment_method">Payment</string>
+    <string name="your_trips">Your Trips</string>
+    <string name="free_rides">Free Rides</string>
+    <string name="help">Help</string>
+    <string name="settings">Settings</string>
+    <string name="drive_with_buber">Drive with Buber</string>
+    <string name="legal">Legal</string>
+    <string name="payment_method_is_great">Payment Method is Great!</string>
+    <string name="show_answer_button">Show Answer</string>
+    <string name="no_image_available">No image available</string>
 </resources>
