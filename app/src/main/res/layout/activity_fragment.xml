@@ -31,6 +31,18 @@
                 android:textSize="24sp"
                 android:layout_gravity="center"
                 android:id="@+id/toolbar_title" />
+
+            <ImageButton
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:id="@+id/map_view_image_button"
+                android:layout_gravity="right"
+                android:background="?android:selectableItemBackground"
+                android:onClick="onSetToMapView"
+                android:layout_marginRight="16dp"
+                android:src="@drawable/car_switch_view_icon_rev2"
+                />
+
         </android.support.v7.widget.Toolbar>
 
         <FrameLayout

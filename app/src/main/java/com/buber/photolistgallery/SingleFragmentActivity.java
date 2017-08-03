@@ -63,6 +63,10 @@ public abstract class SingleFragmentActivity extends AppCompatActivity {
         setMenuVisible(true);
     }
 
+    public void onSetToMapView(View v) {
+        Log.d(TAG, "onSetToMapView() called");
+    }
+
     public void onPaymentMethod(View v) {
         Log.d(TAG, "onPaymentMethod() called");
         Intent i = new Intent(SingleFragmentActivity.this, PaymentMethodActivity.class);
