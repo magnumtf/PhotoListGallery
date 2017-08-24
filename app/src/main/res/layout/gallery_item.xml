@@ -12,18 +12,43 @@
         android:scaleType="centerCrop"
         android:src="@drawable/betty_up_close" />
 
-    <TextView
-        android:id="@+id/fragment_photo_list_gallery_text_view"
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:layout_gravity="center"
-        android:src="@string/tag_line" />
+        android:layout_height="wrap_content"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp" >
 
-    <TextView
-        android:id="@+id/fragment_photo_list_gallery_text_view2"
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:layout_gravity="center"
-        android:src="@string/rating_status_age" />
+        <TextView
+            android:id="@+id/fragment_photo_list_gallery_text_rating"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
+            android:src="@string/just_rating" />
+
+        <TextView
+            android:id="@+id/fragment_photo_list_gallery_text_age"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            android:src="@string/just_status" />
+
+        <TextView
+            android:id="@+id/fragment_photo_list_gallery_text_status"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_below="@id/fragment_photo_list_gallery_text_rating"
+            android:src="@string/just_status" />
+
+        <TextView
+            android:id="@+id/fragment_photo_list_gallery_text_distance"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_below="@id/fragment_photo_list_gallery_text_rating"
+            android:layout_alignParentRight="true"
+            android:src="@string/just_status" />
+
+    </RelativeLayout>
 
 </LinearLayout>

@@ -83,18 +83,24 @@ public class PhotoListGalleryFragment extends Fragment implements MenuVisible {
     private class PhotoHolder extends RecyclerView.ViewHolder
                 implements View.OnClickListener {
         private ImageView mItemImageView;
-        private TextView mTitleTextView;
-        private TextView mTitleTextView2;
+        private TextView mRatingTextView;
+        private TextView mAgeTextView;
+        private TextView mStatusTextView;
+        private TextView mDistanceTextView;
         private final Uri ENDPOINT = Uri
                 .parse("http://www.google.com/");
 
         public PhotoHolder(View itemView) {
             super(itemView);
 
-            mTitleTextView = (TextView) itemView
-                    .findViewById(R.id.fragment_photo_list_gallery_text_view);
-            mTitleTextView2 = (TextView) itemView
-                    .findViewById(R.id.fragment_photo_list_gallery_text_view2);
+            mRatingTextView = (TextView) itemView
+                    .findViewById(R.id.fragment_photo_list_gallery_text_rating);
+            mAgeTextView = (TextView) itemView
+                    .findViewById(R.id.fragment_photo_list_gallery_text_age);
+            mStatusTextView = (TextView) itemView
+                    .findViewById(R.id.fragment_photo_list_gallery_text_status);
+            mDistanceTextView = (TextView) itemView
+                    .findViewById(R.id.fragment_photo_list_gallery_text_distance);
             mItemImageView = (ImageView) itemView
                     .findViewById(R.id.fragment_photo_list_gallery_image_view);
             itemView.setOnClickListener(this);
@@ -105,8 +111,17 @@ public class PhotoListGalleryFragment extends Fragment implements MenuVisible {
         //        }
 
         public void bindGalleryItem(String tagline, String rsa) {
-            mTitleTextView.setText(tagline);
-            mTitleTextView2.setText(rsa);
+            mRatingTextView.setText(tagline);
+            Integer age2 = Integer.valueOf(rsa) - 1;
+            mAgeTextView.setText(age2.toString());
+            String stat = "ONLINE";
+            mStatusTextView.setText(stat);
+            mDistanceTextView.setText(rsa);
+        }
+
+        public void bindGalleryItem2(String tagline, String rsa) {
+            mAgeTextView.setText(tagline);
+            mDistanceTextView.setText(rsa);
         }
 
         public void bindDrawable(Drawable drawable) {
@@ -144,9 +159,12 @@ public class PhotoListGalleryFragment extends Fragment implements MenuVisible {
         @Override
         public void onBindViewHolder(PhotoHolder photoHolder, int position) {
             GalleryItem galleryItem = mGalleryItems.get(position);
-            String tagLine = "Big Orange Beaver";
-            String rating = "rating: 4.9 ONLINE age: 19";
+            String tagLine = "star star";
+            String rating = "19";
             photoHolder.bindGalleryItem(tagLine, rating);
+            tagLine = "ONLINE";
+            rating = "1.9 mi";
+//            photoHolder.bindGalleryItem(2, tagLine, rating);
             Drawable placeholder = getResources().getDrawable(R.drawable.bill_up_close);
             if (mSafeMode) {
                 placeholder = getResources().getDrawable(R.drawable.circle_eyeball1);

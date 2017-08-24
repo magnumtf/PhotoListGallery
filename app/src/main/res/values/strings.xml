@@ -7,6 +7,10 @@
     <string name="tag_line">Big Red Beaver</string>
     <string name="tag_line_default_to_name">Savannah Summertime</string>
     <string name="rating_status_age">rating: 4.5 ONLINE age: 23</string>
+    <string name="just_rating">4.5</string>
+    <string name="just_age">20</string>
+    <string name="just_status">ONLINE</string>
+    <string name="just_distance">4.5 mi</string>
     <string name="name_0">Big Orange Bill</string>
     <string name="name_1">Betty Butt</string>
     <string name="name_2">Bickle Behave</string>
