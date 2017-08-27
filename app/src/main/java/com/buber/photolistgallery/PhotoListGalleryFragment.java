@@ -1,6 +1,7 @@
 package com.buber.photolistgallery;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -83,24 +84,60 @@ public class PhotoListGalleryFragment extends Fragment implements MenuVisible {
     private class PhotoHolder extends RecyclerView.ViewHolder
                 implements View.OnClickListener {
         private ImageView mItemImageView;
-        private TextView mRatingTextView;
+        private ImageView mRatingImageViewStar1;
+        private ImageView mRatingImageViewStar2;
+        private ImageView mRatingImageViewStar3;
+        private ImageView mRatingImageViewStar4;
+        private ImageView mRatingImageViewStar5;
+        private TextView mNumRatingsPOpen;
+        private TextView mNumRatingsPValue;
+        private TextView mNumRatingsPClose;
         private TextView mAgeTextView;
+        private TextView mAgeTextViewStatic;
         private TextView mStatusTextView;
         private TextView mDistanceTextView;
+        private TextView mDistanceTextViewStatic;
         private final Uri ENDPOINT = Uri
                 .parse("http://www.google.com/");
 
         public PhotoHolder(View itemView) {
             super(itemView);
 
-            mRatingTextView = (TextView) itemView
-                    .findViewById(R.id.fragment_photo_list_gallery_text_rating);
+//            mRatingTextView = (TextView) itemView
+//                    .findViewById(R.id.fragment_photo_list_gallery_text_rating);
+            mRatingImageViewStar1 = (ImageView) itemView
+                    .findViewById(R.id.fragment_photo_list_gallery_image_rating1);
+            mRatingImageViewStar2 = (ImageView) itemView
+                    .findViewById(R.id.fragment_photo_list_gallery_image_rating2);
+            mRatingImageViewStar3 = (ImageView) itemView
+                    .findViewById(R.id.fragment_photo_list_gallery_image_rating3);
+            mRatingImageViewStar4 = (ImageView) itemView
+                    .findViewById(R.id.fragment_photo_list_gallery_image_rating4);
+            mRatingImageViewStar5 = (ImageView) itemView
+                    .findViewById(R.id.fragment_photo_list_gallery_image_rating5);
+            mRatingImageViewStar2.setImageResource(R.drawable.ic_star_gold_full_rev1_cropped_scaled3a);
+            mRatingImageViewStar3.setImageResource(R.drawable.ic_star_gold_full_rev1_cropped_scaled3a);
+            mRatingImageViewStar4.setImageResource(R.drawable.ic_star_gold_full_rev1_cropped_scaled3a);
+            mNumRatingsPOpen = (TextView) itemView
+                    .findViewById(R.id.fragment_photo_list_gallery_text_num_ratings_p_open);
+            mNumRatingsPValue = (TextView) itemView
+                    .findViewById(R.id.fragment_photo_list_gallery_text_num_ratings_value);
+            mNumRatingsPClose = (TextView) itemView
+                    .findViewById(R.id.fragment_photo_list_gallery_text_num_ratings_p_close);
+            mNumRatingsPOpen.setText(R.string.num_ratings_p_open);
+            mNumRatingsPClose.setText(R.string.num_ratings_p_close);
             mAgeTextView = (TextView) itemView
                     .findViewById(R.id.fragment_photo_list_gallery_text_age);
+            mAgeTextViewStatic = (TextView) itemView
+                    .findViewById(R.id.fragment_photo_list_gallery_text_age_static);
+            mAgeTextViewStatic.setText(R.string.age_static);
             mStatusTextView = (TextView) itemView
                     .findViewById(R.id.fragment_photo_list_gallery_text_status);
             mDistanceTextView = (TextView) itemView
                     .findViewById(R.id.fragment_photo_list_gallery_text_distance);
+            mDistanceTextViewStatic = (TextView) itemView
+                    .findViewById(R.id.fragment_photo_list_gallery_text_distance_static);
+            mDistanceTextViewStatic.setText(R.string.distance_static);
             mItemImageView = (ImageView) itemView
                     .findViewById(R.id.fragment_photo_list_gallery_image_view);
             itemView.setOnClickListener(this);
@@ -111,11 +148,17 @@ public class PhotoListGalleryFragment extends Fragment implements MenuVisible {
         //        }
 
         public void bindGalleryItem(String tagline, String rsa) {
-            mRatingTextView.setText(tagline);
+//            mRatingTextView.setText(tagline);
             Integer age2 = Integer.valueOf(rsa) - 1;
             mAgeTextView.setText(age2.toString());
             String stat = "ONLINE";
             mStatusTextView.setText(stat);
+            mStatusTextView.setTextColor(Color.GREEN);
+//            mStatusTextView.setTextColor(Color.DKGRAY);
+//            mStatusTextView.setTextColor(Color.LTGRAY);
+            mRatingImageViewStar4.setImageResource(R.drawable.ic_star_gold_half_rev1_cropped_scaled3a);
+            String numRatings = "865";
+            mNumRatingsPValue.setText(numRatings);
             mDistanceTextView.setText(rsa);
         }
 

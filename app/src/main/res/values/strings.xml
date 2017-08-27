@@ -11,6 +11,13 @@
     <string name="just_age">20</string>
     <string name="just_status">ONLINE</string>
     <string name="just_distance">4.5 mi</string>
+    <string name="age_static">\u0020yrs</string>
+    <string name="age_default">20</string>
+    <string name="num_ratings_p_open">\u0020(</string>
+    <string name="num_ratings_p_close">)</string>
+    <string name="num_ratings_value">0</string>
+    <string name="distance_static">\u0020mi.</string>
+    <string name="distance_default">99</string>
     <string name="name_0">Big Orange Bill</string>
     <string name="name_1">Betty Butt</string>
     <string name="name_2">Bickle Behave</string>
