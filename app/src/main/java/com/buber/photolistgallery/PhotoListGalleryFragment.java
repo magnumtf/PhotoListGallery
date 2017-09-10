@@ -9,6 +9,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.Fragment;
+import android.support.v4.util.Pair;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
@@ -38,12 +39,10 @@ import java.util.List;
 
 public class PhotoListGalleryFragment extends Fragment implements MenuVisible {
     private static final String TAG = "PhotoLGFragment";
-
     private RecyclerView mPhotoListRecyclerView;
-//    private LinearLayoutManager mLinearLayoutManager;
     private GridLayoutManager mGridLayoutManager;
-    private List<GalleryItem> mItems = new ArrayList<>();
     private boolean mMenuVisible;
+    private DriverAdapter mAdapter;
 
     public static PhotoListGalleryFragment newInstance() {
         return new PhotoListGalleryFragment();
@@ -66,14 +65,43 @@ public class PhotoListGalleryFragment extends Fragment implements MenuVisible {
         mGridLayoutManager = new GridLayoutManager(getActivity(), 2);
         mPhotoListRecyclerView.setLayoutManager(mGridLayoutManager);
         mMenuVisible = false;
-        setupAdapter();
-
+        updateUI(null);
         return v;
     }
 
-    private void setupAdapter() {
-        if (isAdded()) {
-            mPhotoListRecyclerView.setAdapter(new PhotoAdapter(mItems));
+    @Override
+    public void onResume() {
+        super.onResume();
+        updateUI(null);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mAdapter = null;
+    }
+
+    private void updateUI(List<Driver> items) {
+        DriverLab driverLab = DriverLab.get(getActivity());
+        List<Driver> drivers;
+        if (items == null) {
+            drivers = driverLab.getDrivers();
+        } else {
+            drivers = items;
+        }
+
+        Log.d(TAG, "updateUI(): Drivers = ");
+        Integer dnum = 1;
+        for (Driver d : drivers) {
+            Log.d(TAG, "updateUI(): Driver " + dnum.toString() + ": Name = " + d.getStageName());
+            dnum += 1;
+        }
+
+        if (mAdapter == null) {
+            mAdapter = new DriverAdapter(drivers);
+            mPhotoListRecyclerView.setAdapter(mAdapter);
+        } else {
+            mAdapter.notifyDataSetChanged();
         }
     }
 
@@ -81,7 +109,7 @@ public class PhotoListGalleryFragment extends Fragment implements MenuVisible {
         mMenuVisible = visible;
     }
 
-    private class PhotoHolder extends RecyclerView.ViewHolder
+    private class DriverHolder extends RecyclerView.ViewHolder
                 implements View.OnClickListener {
         private ImageView mItemImageView;
         private ImageView mRatingImageViewStar1;
@@ -100,7 +128,7 @@ public class PhotoListGalleryFragment extends Fragment implements MenuVisible {
         private final Uri ENDPOINT = Uri
                 .parse("http://www.google.com/");
 
-        public PhotoHolder(View itemView) {
+        public DriverHolder(View itemView) {
             super(itemView);
 
 //            mRatingTextView = (TextView) itemView
@@ -115,9 +143,11 @@ public class PhotoListGalleryFragment extends Fragment implements MenuVisible {
                     .findViewById(R.id.fragment_photo_list_gallery_image_rating4);
             mRatingImageViewStar5 = (ImageView) itemView
                     .findViewById(R.id.fragment_photo_list_gallery_image_rating5);
+            mRatingImageViewStar1.setImageResource(R.drawable.ic_star_gold_full_rev1_cropped_scaled3a);
             mRatingImageViewStar2.setImageResource(R.drawable.ic_star_gold_full_rev1_cropped_scaled3a);
             mRatingImageViewStar3.setImageResource(R.drawable.ic_star_gold_full_rev1_cropped_scaled3a);
             mRatingImageViewStar4.setImageResource(R.drawable.ic_star_gold_full_rev1_cropped_scaled3a);
+            mRatingImageViewStar5.setImageResource(R.drawable.ic_star_gold_full_rev1_cropped_scaled3a);
             mNumRatingsPOpen = (TextView) itemView
                     .findViewById(R.id.fragment_photo_list_gallery_text_num_ratings_p_open);
             mNumRatingsPValue = (TextView) itemView
@@ -147,24 +177,58 @@ public class PhotoListGalleryFragment extends Fragment implements MenuVisible {
         //            mTitleTextView.setText(item.toString());
         //        }
 
-        public void bindGalleryItem(String tagline, String rsa) {
-//            mRatingTextView.setText(tagline);
-            Integer age2 = Integer.valueOf(rsa) - 1;
-            mAgeTextView.setText(age2.toString());
-            String stat = "ONLINE";
-            mStatusTextView.setText(stat);
-            mStatusTextView.setTextColor(Color.GREEN);
-//            mStatusTextView.setTextColor(Color.DKGRAY);
-//            mStatusTextView.setTextColor(Color.LTGRAY);
-            mRatingImageViewStar4.setImageResource(R.drawable.ic_star_gold_half_rev1_cropped_scaled3a);
-            String numRatings = "865";
-            mNumRatingsPValue.setText(numRatings);
-            mDistanceTextView.setText(rsa);
+        public void bindDriver(Driver driver) {
+            String age = driver.getAgeFormatted();
+            mAgeTextView.setText(age);
+            mStatusTextView.setText(driver.getStatus());
+            Integer endStarNumber = driver.getEndStarNumber();
+            int partialStarResource = driver.getPartialStarResource();
+            ImageView ratingStarView;
+            for (int i=0; i<5; i++) {
+                ratingStarView = getRatingStarView(i);
+                if (ratingStarView == null) {
+                    continue;
+                } else if (i < endStarNumber) {
+                    ratingStarView.setImageResource(R.drawable.ic_star_gold_full_rev1_cropped_scaled3a);
+                } else if (i == endStarNumber) {
+                    ratingStarView.setImageResource(partialStarResource);
+                }
+                else {
+                    ratingStarView.setImageResource(R.drawable.ic_star_gold_empty_rev1_cropped_scaled3a);
+                }
+            }
+            // do nothing test
+            Integer numRatings = driver.getNumRatings();
+            String retRating = driver.getRatingFormatted();
+// use for debugging stars           mNumRatingsPValue.setText(retRating);
+            mNumRatingsPValue.setText(numRatings.toString());
+            String distance = driver.getDistanceFormatted();
+            mDistanceTextView.setText(distance);
+            Log.d(TAG, "bindDriver(): Age = " + age + ". Rating = " + retRating + ". endStarIndex = " +  endStarNumber.toString() + ". Distance = " + distance);
         }
 
-        public void bindGalleryItem2(String tagline, String rsa) {
-            mAgeTextView.setText(tagline);
-            mDistanceTextView.setText(rsa);
+        private ImageView getRatingStarView(int index) {
+            ImageView retview;
+            switch (index) {
+                case 0:
+                    retview = mRatingImageViewStar1;
+                    break;
+                case 1:
+                    retview = mRatingImageViewStar2;
+                    break;
+                case 2:
+                    retview = mRatingImageViewStar3;
+                    break;
+                case 3:
+                    retview = mRatingImageViewStar4;
+                    break;
+                case 4:
+                    retview = mRatingImageViewStar5;
+                    break;
+                default:
+                    retview = null;
+            }
+            return retview;
         }
 
         public void bindDrawable(Drawable drawable) {
@@ -183,55 +247,44 @@ public class PhotoListGalleryFragment extends Fragment implements MenuVisible {
 
     }
 
-    private class PhotoAdapter extends RecyclerView.Adapter<PhotoHolder> {
-        private List<GalleryItem> mGalleryItems;
+    private class DriverAdapter extends RecyclerView.Adapter<DriverHolder> {
+        private List<Driver> mDrivers;
         private boolean mSafeMode;
 
-        public PhotoAdapter(List<GalleryItem> galleryItems) {
-            mGalleryItems = galleryItems;
+        public DriverAdapter(List<Driver> drivers) {
+            mDrivers = drivers;
             mSafeMode = true;
         }
 
         @Override
-        public PhotoHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
+        public DriverHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
             LayoutInflater inflater = LayoutInflater.from(getActivity());
             View view = inflater.inflate(R.layout.gallery_item, viewGroup, false);
-            return new PhotoHolder(view);
+            return new DriverHolder(view);
         }
 
         @Override
-        public void onBindViewHolder(PhotoHolder photoHolder, int position) {
-            GalleryItem galleryItem = mGalleryItems.get(position);
-            String tagLine = "star star";
-            String rating = "19";
-            photoHolder.bindGalleryItem(tagLine, rating);
-            tagLine = "ONLINE";
-            rating = "1.9 mi";
-//            photoHolder.bindGalleryItem(2, tagLine, rating);
-            Drawable placeholder = getResources().getDrawable(R.drawable.bill_up_close);
-            if (mSafeMode) {
-                placeholder = getResources().getDrawable(R.drawable.circle_eyeball1);
-            }
-            photoHolder.bindDrawable(placeholder);
-//            photoHolder.bindGalleryItem(galleryItem);
+        public void onBindViewHolder(DriverHolder holder, int position) {
+            Driver driver = mDrivers.get(position);
+            holder.bindDriver(driver);
         }
 
         @Override
         public int getItemCount() {
-            return mGalleryItems.size();
+            return mDrivers.size();
         }
     }
 
-    private class FetchItemsTask extends AsyncTask<Void, Void, List<GalleryItem>> {
+    private class FetchItemsTask extends AsyncTask<Void, Void, List<Driver>> {
         @Override
-        protected List<GalleryItem> doInBackground(Void... params) {
+        protected List<Driver> doInBackground(Void... params) {
             return new FlickrFetchr().fetchItems();
         }
 
         @Override
-        protected void onPostExecute(List<GalleryItem> items) {
-            mItems = items;
-            setupAdapter();
+        protected void onPostExecute(List<Driver> items) {
+            updateUI(items);
         }
     }
+
 }

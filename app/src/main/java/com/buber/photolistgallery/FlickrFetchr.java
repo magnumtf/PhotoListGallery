@@ -53,8 +53,8 @@ public class FlickrFetchr {
         return new String(getUrlBytes(urlSpec));
     }
 
-    public List<GalleryItem> fetchItems() {
-        List<GalleryItem> items = new ArrayList<>();
+    public List<Driver> fetchItems() {
+        List<Driver> drivers = new ArrayList<>();
 
         try {
             String url = Uri.parse("https://api.flickr.com/services/rest/")
@@ -67,8 +67,8 @@ public class FlickrFetchr {
                     .build().toString();
             String jsonString = getUrlString(url);
             JSONObject jsonBody = new JSONObject(jsonString);
-            parseItems(items, jsonBody);
-            Log.i(TAG, "Gallery Items Size = "+ items.size() + ". Received JSON: " + jsonString);
+            parseItems(drivers, jsonBody);
+            Log.i(TAG, "Gallery Items Size = "+ drivers.size() + ". Received JSON: " + jsonString);
         } catch (JSONException je) {
             Log.e(TAG, "Failed to parse JSON", je);
         }
@@ -76,10 +76,10 @@ public class FlickrFetchr {
             Log.e(TAG, "Failed to fetch items", ioe);
         }
 
-        return items;
+        return drivers;
     }
 
-    private void parseItems(List<GalleryItem> items, JSONObject jsonBody)
+    private void parseItems(List<Driver> drivers, JSONObject jsonBody)
         throws IOException, JSONException {
         JSONObject photosJsonObject = jsonBody.getJSONObject("photos");
         JSONArray photoJsonArray = photosJsonObject.getJSONArray("photo");
@@ -87,16 +87,16 @@ public class FlickrFetchr {
         for (int i = 0; i < photoJsonArray.length(); i++ ) {
             JSONObject photoJsonObject = photoJsonArray.getJSONObject(i);
 
-            GalleryItem item = new GalleryItem();
-            item.setId(photoJsonObject.getString("id"));
-            item.setCaption(photoJsonObject.getString("title"));
+            Driver driver = new Driver();
+            driver.setFlickrId(photoJsonObject.getString("id"));
+            driver.setCaption(photoJsonObject.getString("title"));
 
             if (!photoJsonObject.has("url_s")) {
                 continue;
             }
 
-            item.setUrl(photoJsonObject.getString("url_s"));
-            items.add(item);
+            driver.setUrl(photoJsonObject.getString("url_s"));
+            drivers.add(driver);
         }
     }
 }
