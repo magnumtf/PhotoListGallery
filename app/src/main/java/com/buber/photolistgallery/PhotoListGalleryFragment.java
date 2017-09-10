@@ -52,7 +52,7 @@ public class PhotoListGalleryFragment extends Fragment implements MenuVisible {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
-        new FetchItemsTask().execute();
+//        new FetchItemsTask().execute();
     }
 
     @Override
