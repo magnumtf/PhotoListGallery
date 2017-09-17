@@ -1,5 +1,6 @@
 package com.buber.photolistgallery;
 
+import java.util.Random;
 import java.util.UUID;
 
 /**
@@ -7,7 +8,7 @@ import java.util.UUID;
  */
 
 public class Driver {
-    private UUID mId;
+    private int mId;
     private String mStageName;
     private float mRating;
     private int mRatingInt;
@@ -20,19 +21,24 @@ public class Driver {
     private String mCaption;
     private String mUrl;
     private String mFlickrId;
+    private String mHeadline;
+    private String mCity;
+    private String mGender;
 
     public Driver() {
-        // Generate unique identifier
-        mId = UUID.randomUUID();
+        // Generate non-unique identifier
+        Random r = new Random();
+        mId = 2500 + r.nextInt(10000);
         mStatus = "ONLINE";  // should be an enum?
         mPartStarResource = R.drawable.ic_star_gold_full_rev1_cropped_scaled3a;
+        mGender = "female";
     }
 
-    public UUID getId() {
+    public int getId() {
         return mId;
     }
 
-    public void setId(UUID id) {
+    public void setId(int id) {
         this.mId = id;
     }
 
@@ -153,5 +159,34 @@ public class Driver {
 
     public void setFlickrId(String flickrId) {
         this.mFlickrId = flickrId;
+    }
+
+    public String getHeadline() {
+        return mHeadline;
+    }
+
+    public void setHeadline(String headline) {
+        this.mHeadline = headline;
+    }
+
+    public String getCity() {
+        return mCity;
+    }
+
+    public void setmCity(String city) {
+        this.mCity = city;
+    }
+
+    public String getGender() {
+        return mGender;
+    }
+
+    public void setmGender(String gender) {
+        if (gender.startsWith("Male") || gender.startsWith("male") || gender.startsWith("MALE"))
+            this.mGender = "male";
+        else if (gender.startsWith("Tran") || gender.startsWith("tran") || gender.startsWith("TRAN"))
+            this.mGender = "trans";
+        else
+            this.mGender = "female";
     }
 }

@@ -27,8 +27,10 @@ public class DriverLab {
         int rand;
         String fname;
         String lname;
+        String city = "Boston";
         ArrayList<String> firstNames = new ArrayList<String>();
         ArrayList<String> lastNames = new ArrayList<String>();
+
         firstNames.add("Kitty");
         firstNames.add("Summer");
         firstNames.add("Jasmine");
@@ -69,6 +71,7 @@ public class DriverLab {
             driver.setThumbNail(rand);
             rand = r.nextInt(51);
             driver.setRating((float)rand/10.0f);
+            driver.setCaption(city);
             mDrivers.add(driver);
         }
     }
@@ -81,9 +84,9 @@ public class DriverLab {
         return mDrivers;
     }
 
-    public Driver getDriver(UUID id) {
+    public Driver getDriver(int id) {
         for (Driver driver : mDrivers) {
-            if (driver.getId().equals(id)) {
+            if (driver.getId() == id) {
                 return driver;
             }
         }

@@ -23,6 +23,7 @@ import static com.buber.photolistgallery.R.drawable.ladybaby1;
 public class PhotoPageFragment extends Fragment implements MenuVisible {
     private static final String TAG = "PhotoPageFragment";
     private static final String ARG_URI = "photo_page_url";
+    private static final String ARG_DRIVER_ID = "photo_page_driver_id";
 
     private Uri mUri;
     private String mDataString;
@@ -34,11 +35,12 @@ public class PhotoPageFragment extends Fragment implements MenuVisible {
     private boolean mSetDefaultImage;
     private boolean mSafeMode;
     private boolean mMenuVisible;
+    private Driver mDriver;
 
-    public static PhotoPageFragment newInstance(Uri uri) {
+    public static PhotoPageFragment newInstance(Uri uri, int driverId) {
         Bundle args = new Bundle();
         args.putParcelable(ARG_URI, uri);
-
+        args.putInt(ARG_DRIVER_ID, driverId);
         PhotoPageFragment fragment = new PhotoPageFragment();
         fragment.setArguments(args);
         return fragment;
@@ -51,6 +53,9 @@ public class PhotoPageFragment extends Fragment implements MenuVisible {
         setRetainInstance(true);
         mSetDefaultImage = false;
         mSafeMode = true;
+        DriverLab driverLab = DriverLab.get(getActivity());
+        int driverId = getArguments().getInt(ARG_DRIVER_ID);
+        mDriver = driverLab.getDriver(driverId);
     }
 
     @Override
@@ -73,7 +78,19 @@ public class PhotoPageFragment extends Fragment implements MenuVisible {
         mCommentTextView = (TextView) v
                 .findViewById(R.id.fragment_photo_page_text_comment);
 
-        mNameTextView.setText(R.string.name_1);
+        if (mDriver == null) {
+            mNameTextView.setText(R.string.name_1);
+        } else if (mDriver.getHeadline() == null) {
+            if (mDriver.getStageName() == null) {
+                String headline2 = mDriver.getAgeFormatted() + " year old " + mDriver.getGender() + " from " + mDriver.getCity();
+                mNameTextView.setText(headline2);
+            } else {
+                mNameTextView.setText(mDriver.getStageName());
+            }
+        } else {
+            mNameTextView.setText(mDriver.getHeadline());
+        }
+
         mMessageTextView.setText(R.string.detailed_m_1);
         mCommentTextView.setText(R.string.comment_1);
 

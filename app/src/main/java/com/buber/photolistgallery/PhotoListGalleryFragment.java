@@ -9,9 +9,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.Fragment;
-import android.support.v4.util.Pair;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -125,6 +122,7 @@ public class PhotoListGalleryFragment extends Fragment implements MenuVisible {
         private TextView mStatusTextView;
         private TextView mDistanceTextView;
         private TextView mDistanceTextViewStatic;
+        private int mDriverId;
         private final Uri ENDPOINT = Uri
                 .parse("http://www.google.com/");
 
@@ -170,12 +168,9 @@ public class PhotoListGalleryFragment extends Fragment implements MenuVisible {
             mDistanceTextViewStatic.setText(R.string.distance_static);
             mItemImageView = (ImageView) itemView
                     .findViewById(R.id.fragment_photo_list_gallery_image_view);
+            mDriverId = 0;
             itemView.setOnClickListener(this);
         }
-
-        //        public void bindGalleryItem(GalleryItem item) {
-        //            mTitleTextView.setText(item.toString());
-        //        }
 
         public void bindDriver(Driver driver) {
             String age = driver.getAgeFormatted();
@@ -204,6 +199,7 @@ public class PhotoListGalleryFragment extends Fragment implements MenuVisible {
             mNumRatingsPValue.setText(numRatings.toString());
             String distance = driver.getDistanceFormatted();
             mDistanceTextView.setText(distance);
+            mDriverId = driver.getId();
             Log.d(TAG, "bindDriver(): Age = " + age + ". Rating = " + retRating + ". endStarIndex = " +  endStarNumber.toString() + ". Distance = " + distance);
         }
 
@@ -231,16 +227,12 @@ public class PhotoListGalleryFragment extends Fragment implements MenuVisible {
             return retview;
         }
 
-        public void bindDrawable(Drawable drawable) {
-            mItemImageView.setImageDrawable(drawable);
-        }
-
         @Override
         public void onClick(View v) {
             // implicit, dont use            Intent i = new Intent(Intent.ACTION_VIEW, ENDPOINT);
             if (!mMenuVisible) {
                 Intent i = PhotoPageActivity
-                        .newIntent(getActivity(), ENDPOINT);
+                        .newIntent(getActivity(), ENDPOINT, mDriverId);
                 startActivity(i);
             }
         }

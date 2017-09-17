@@ -11,14 +11,17 @@ import android.support.v4.app.Fragment;
 
 public class PhotoPageActivity extends SingleFragmentActivity {
 
-    public static Intent newIntent(Context context, Uri photoPageUri) {
+    private static final String DRIVER_ID = "com.buber.photolistgallery.driver_id";
+
+    public static Intent newIntent(Context context, Uri photoPageUri, int id) {
         Intent i = new Intent(context, PhotoPageActivity.class);
         i.setData(photoPageUri);
+        i.putExtra(DRIVER_ID, id);
         return i;
     }
 
     @Override
     protected Fragment createFragment() {
-        return PhotoPageFragment.newInstance(getIntent().getData());
+        return PhotoPageFragment.newInstance(getIntent().getData(), getIntent().getIntExtra(DRIVER_ID, 0));
     }
 }
