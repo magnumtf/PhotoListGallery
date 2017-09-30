@@ -1,5 +1,6 @@
 package com.buber.photolistgallery;
 
+import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -7,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -127,6 +129,16 @@ public class PhotoPageFragment extends Fragment implements MenuVisible {
             }
         }
         );
+
+        mPhotoImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // do stuff
+                Intent i = new Intent(getActivity(), PhotoDetailedPageActivity.class);
+                startActivity(i);
+                // next, how to go back to calling activity, on Resume maybe set menuvisibilit ...
+            }
+        });
         return v;
     }
 

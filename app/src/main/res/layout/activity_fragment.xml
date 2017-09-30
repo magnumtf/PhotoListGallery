@@ -66,12 +66,12 @@
             <RelativeLayout
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
+                android:layout_height="120dp"
                 android:orientation="horizontal">
 
                 <ImageView
                     android:id="@+id/useravatar_overlay_menu"
-                    android:src="@drawable/default_avatarab_pt5ab"
+                    android:src="@drawable/default_avatarab_pt5ab_red80"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="16dp"
@@ -98,13 +98,51 @@
                 android:background="#FF00FF00" />
 
             <TextView
+                android:id="@+id/verified_splainin_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorTextOverlayItems"
+                android:textSize="18sp"
+                android:fontFamily="sans-serif-condensed"
+                android:padding="10dp"
+                android:onClick="onVerifiedHelp"
+                android:text="@string/verified_splainin" />
+
+            <TextView
+                android:id="@+id/pics_real_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorTextOverlayItems"
+                android:textSize="18sp"
+                android:fontFamily="sans-serif-condensed"
+                android:padding="10dp"
+                android:onClick="onRealPicsHelp"
+                android:text="@string/pics_real" />
+
+            <TextView
+                android:id="@+id/tip_negotiator_help_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorTextOverlayItems"
+                android:textSize="18sp"
+                android:fontFamily="sans-serif-condensed"
+                android:padding="10dp"
+                android:onClick="onTipNegotiatorHelp"
+                android:text="@string/tip_negotiator_help" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="#FF00FF00" />
+
+            <TextView
                 android:id="@+id/payment_settings_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorTextOverlayItems"
                 android:textSize="18sp"
                 android:fontFamily="sans-serif-condensed"
-                android:padding="12dp"
+                android:padding="10dp"
                 android:onClick="onPaymentMethod"
                 android:text="@string/payment_method" />
 
@@ -115,20 +153,9 @@
                 android:textColor="@color/colorTextOverlayItems"
                 android:textSize="18sp"
                 android:fontFamily="sans-serif-condensed"
-                android:padding="12dp"
+                android:padding="10dp"
                 android:onClick="onYourTrips"
                 android:text="@string/your_trips" />
-
-            <TextView
-                android:id="@+id/free_rides_text_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/colorTextOverlayItems"
-                android:textSize="18sp"
-                android:fontFamily="sans-serif-condensed"
-                android:padding="12dp"
-                android:onClick="onFreeRides"
-                android:text="@string/free_rides" />
 
             <TextView
                 android:id="@+id/help_text_view"
@@ -137,20 +164,9 @@
                 android:textColor="@color/colorTextOverlayItems"
                 android:textSize="18sp"
                 android:fontFamily="sans-serif-condensed"
-                android:padding="12dp"
+                android:padding="10dp"
                 android:onClick="onNeedHelp"
                 android:text="@string/help" />
-
-            <TextView
-                android:id="@+id/settings_text_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/colorTextOverlayItems"
-                android:textSize="18sp"
-                android:fontFamily="sans-serif-condensed"
-                android:padding="12dp"
-                android:onClick="onGoToSettings"
-                android:text="@string/settings" />
 
             <View
                 android:layout_width="match_parent"
@@ -164,7 +180,7 @@
                 android:textColor="@color/colorTextOverlayItems"
                 android:textSize="18sp"
                 android:fontFamily="sans-serif-condensed"
-                android:padding="12dp"
+                android:padding="10dp"
                 android:onClick="onDriveWithBuber"
                 android:text="@string/drive_with_buber" />
 
@@ -175,7 +191,7 @@
                 android:textColor="@color/colorTextOverlayItems"
                 android:textSize="18sp"
                 android:fontFamily="sans-serif-condensed"
-                android:padding="12dp"
+                android:padding="10dp"
                 android:onClick="onLegal"
                 android:text="@string/legal" />
 

@@ -41,6 +41,7 @@ public class DriverLab {
         firstNames.add("Stormy");
         firstNames.add("Savannah");
         firstNames.add("Crabby");
+        firstNames.add("Sweaty");
 
         lastNames.add("Berry");
         lastNames.add("Blacky");
@@ -52,13 +53,14 @@ public class DriverLab {
         lastNames.add("Louder");
         lastNames.add("Precious");
         lastNames.add("Mother");
+        lastNames.add("Longsnapper");
 
         mDrivers = new ArrayList<>();
         for (int i = 0; i < 100; i++) {
             Driver driver = new Driver();
-            rand = r.nextInt(10);
+            rand = r.nextInt(11);
             fname = firstNames.get(rand);
-            rand = r.nextInt(10);
+            rand = r.nextInt(11);
             lname = lastNames.get(rand);
             driver.setStageName(fname + " " + lname);
             rand = r.nextInt(10);

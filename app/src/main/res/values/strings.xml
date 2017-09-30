@@ -48,4 +48,13 @@
     <string name="payment_method_is_great">Payment Method is Great!</string>
     <string name="show_answer_button">Show Answer</string>
     <string name="no_image_available">No image available</string>
+    <string name="verified_splainin">What is Verified?</string>
+    <string name="pics_real">Are Pics Real?</string>
+    <string name="tip_negotiator_help">What is the Tip Negotiator?</string>
+    <string name="pics_real_bullet1">1. Buber rejects pics that are downloaded from other sites.\n2. The \"Photos Accurate\" user rating is a good indicator.</string>
+    <string name="pics_real_bullet1b">3. A reverse image search can be started from the detailed photo view page:</string>
+    <string name="pics_real_bullet2">\ta.Click the Search Icon in the toolbar. This will take you to the Google Image Search page.</string>
+    <string name="pics_real_bullet3">\tb.Long press or double-click the search box, then click Paste.\n\tc.Click the Search Icon.\n\td.Click on the \"search by image\" link after the search returns did not match results (see pic).</string>
+    <string name="pics_real_bullet4">\te.Multiple results from the search increase the likelihood that the pic is fake.</string>
+    <string name="search_button_text">Temporary Search Button</string>
 </resources>

@@ -78,16 +78,8 @@ public abstract class SingleFragmentActivity extends AppCompatActivity {
         Log.d(TAG, "onYourTrips() called");
     }
 
-    public void onFreeRides(View v) {
-        Log.d(TAG, "onFreeRides() called");
-    }
-
     public void onNeedHelp(View v) {
         Log.d(TAG, "onNeedHelp() called");
-    }
-
-    public void onGoToSettings(View v) {
-        Log.d(TAG, "onGoToSettings() called");
     }
 
     public void onDriveWithBuber(View v) {
@@ -96,6 +88,21 @@ public abstract class SingleFragmentActivity extends AppCompatActivity {
 
     public void onLegal(View v) {
         Log.d(TAG, "onLegal() called");
+    }
+
+    public void onRealPicsHelp(View v) {
+        Log.d(TAG, "onRealPicsHelp() called");
+        Intent i = new Intent(SingleFragmentActivity.this, PicsRealActivity.class);
+        startActivity(i);
+        // next, how to go back to calling activity, on Resume maybe set menuvisibilit ...
+    }
+
+    public void onVerifiedHelp(View v) {
+        Log.d(TAG, "onVerifiedHelp() called");
+    }
+
+    public void onTipNegotiatorHelp(View v) {
+        Log.d(TAG, "onTipNegotiatorHelp() called");
     }
 
     private void setMenuVisible(boolean setVis) {

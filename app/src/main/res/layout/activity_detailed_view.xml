@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.buber.photolistgallery.PhotoDetailedPageActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/myToolbar"
+        android:minHeight="?attr/actionBarSize"
+        android:background="@color/colorToolbarBackground"
+        android:layout_width="match_parent"
+        android:layout_height="56dp">
+
+        <ImageButton
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:id="@+id/menu_image_button"
+            android:layout_gravity="left"
+            android:background="?android:selectableItemBackground"
+            android:onClick="onGoBack"
+            android:src="@drawable/ic_arrow_back_black_24dp_r1a"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:textSize="24sp"
+            android:layout_gravity="center"
+            android:id="@+id/toolbar_title" />
+
+        <ImageButton
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:id="@+id/map_view_image_button"
+            android:layout_gravity="right"
+            android:background="?android:selectableItemBackground"
+            android:onClick="onSearchPic"
+            android:layout_marginRight="16dp"
+            android:src="@drawable/ic_search_black_24dp_r4"
+            />
+
+    </android.support.v7.widget.Toolbar>
+
+    <WebView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/detailed_webview"
+        android:layout_below="@id/myToolbar"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        />
+
+</RelativeLayout>

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/pics_real_relative_layout_view"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/pics_real_title_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:textSize="24sp"
+        android:layout_centerHorizontal="true"
+        android:text="@string/pics_real" />
+
+    <TextView
+        android:id="@+id/pics_real_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/pics_real_title_text_view"
+        android:layout_marginLeft="8dp"
+        android:textSize="14sp"
+        android:text="@string/pics_real_bullet1" />
+
+    <TextView
+        android:id="@+id/start_image_search_bullet_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/pics_real_text_view"
+        android:layout_marginLeft="8dp"
+        android:textSize="14sp"
+        android:text="@string/pics_real_bullet1b" />
+
+    <ImageView
+        android:id="@+id/pics_image_search_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/start_image_search_bullet_text_view"
+        android:clickable="true"
+        android:onClick="onBigPicture"
+        android:src="@drawable/capture__im_sea_1_r2a"/>
+
+    <TextView
+        android:id="@+id/pics_real_search_bullets_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/pics_image_search_view"
+        android:layout_marginLeft="8dp"
+        android:textSize="14sp"
+        android:text="@string/pics_real_bullet2" />
+
+    <TextView
+        android:id="@+id/pics_real_search_bullets2_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/pics_real_search_bullets_text_view"
+        android:layout_marginLeft="8dp"
+        android:textSize="14sp"
+        android:text="@string/pics_real_bullet3" />
+
+    <TextView
+        android:id="@+id/pics_real_search_bullets3_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/pics_real_search_bullets2_text_view"
+        android:layout_marginLeft="8dp"
+        android:textSize="14sp"
+        android:text="@string/pics_real_bullet4" />
+
+    <LinearLayout
+        android:id="@+id/big_pic_overlay"
+        android:layout_width="270dp"
+        android:layout_height="360dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:background="#BA000000"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/pics_image_search_view_big"
+            android:src="@drawable/capture__im_sea_1_big_1a"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:foregroundGravity="center"
+            android:scaleType="centerCrop"
+            android:text="@string/no_image_available" />
+
+    </LinearLayout>
+
+</RelativeLayout>
