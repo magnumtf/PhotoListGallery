@@ -26,6 +26,8 @@ import android.widget.EditText;
 import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +42,7 @@ public class PhotoListGalleryFragment extends Fragment implements MenuVisible {
     private GridLayoutManager mGridLayoutManager;
     private boolean mMenuVisible;
     private DriverAdapter mAdapter;
+    private Picasso mPicasso;
 
     public static PhotoListGalleryFragment newInstance() {
         return new PhotoListGalleryFragment();
@@ -49,6 +52,7 @@ public class PhotoListGalleryFragment extends Fragment implements MenuVisible {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
+        mPicasso = Picasso.with(getActivity());
 //        new FetchItemsTask().execute();
     }
 
@@ -95,7 +99,7 @@ public class PhotoListGalleryFragment extends Fragment implements MenuVisible {
         }
 
         if (mAdapter == null) {
-            mAdapter = new DriverAdapter(drivers);
+            mAdapter = new DriverAdapter(drivers, mPicasso);
             mPhotoListRecyclerView.setAdapter(mAdapter);
         } else {
             mAdapter.notifyDataSetChanged();
@@ -172,7 +176,7 @@ public class PhotoListGalleryFragment extends Fragment implements MenuVisible {
             itemView.setOnClickListener(this);
         }
 
-        public void bindDriver(Driver driver) {
+        public void bindDriver(Driver driver, Picasso picasso) {
             String age = driver.getAgeFormatted();
             mAgeTextView.setText(age);
             mStatusTextView.setText(driver.getStatus());
@@ -200,7 +204,44 @@ public class PhotoListGalleryFragment extends Fragment implements MenuVisible {
             String distance = driver.getDistanceFormatted();
             mDistanceTextView.setText(distance);
             mDriverId = driver.getId();
+            String url = driver.getUrl();
+            if (picasso != null) {
+                picasso.load(url)
+                        .placeholder(R.drawable.betty_up_close)
+                        .into(mItemImageView);
+            }
             Log.d(TAG, "bindDriver(): Age = " + age + ". Rating = " + retRating + ". endStarIndex = " +  endStarNumber.toString() + ". Distance = " + distance);
+        }
+
+        private void reset() {
+            String age = "99";
+            mAgeTextView.setText(age);
+            mStatusTextView.setText("RESTING");
+            Integer endStarNumber = 5;
+            int partialStarResource = 0;
+            ImageView ratingStarView;
+            for (int i=0; i<5; i++) {
+                ratingStarView = getRatingStarView(i);
+                if (ratingStarView == null) {
+                    continue;
+                } else if (i < endStarNumber) {
+                    ratingStarView.setImageResource(R.drawable.ic_star_gold_full_rev1_cropped_scaled3a);
+                } else if (i == endStarNumber) {
+                    ratingStarView.setImageResource(partialStarResource);
+                }
+                else {
+                    ratingStarView.setImageResource(R.drawable.ic_star_gold_empty_rev1_cropped_scaled3a);
+                }
+            }
+            // do nothing test
+            Integer numRatings = 999;
+            String retRating = "999";
+            mNumRatingsPValue.setText(numRatings.toString());
+            String distance = "6.9";
+            mDistanceTextView.setText(distance);
+            mDriverId = 0;
+            mItemImageView.setImageResource(R.drawable.bickle_up_close);
+            Log.d(TAG, "reset(): Age = " + age + ". Rating = " + retRating + ". endStarIndex = " +  endStarNumber.toString() + ". Distance = " + distance);
         }
 
         private ImageView getRatingStarView(int index) {
@@ -242,10 +283,12 @@ public class PhotoListGalleryFragment extends Fragment implements MenuVisible {
     private class DriverAdapter extends RecyclerView.Adapter<DriverHolder> {
         private List<Driver> mDrivers;
         private boolean mSafeMode;
+        private Picasso mPicasso;
 
-        public DriverAdapter(List<Driver> drivers) {
+        public DriverAdapter(List<Driver> drivers, Picasso picasso) {
             mDrivers = drivers;
             mSafeMode = true;
+            mPicasso = picasso;
         }
 
         @Override
@@ -258,12 +301,18 @@ public class PhotoListGalleryFragment extends Fragment implements MenuVisible {
         @Override
         public void onBindViewHolder(DriverHolder holder, int position) {
             Driver driver = mDrivers.get(position);
-            holder.bindDriver(driver);
+            holder.bindDriver(driver, mPicasso);
         }
 
         @Override
         public int getItemCount() {
             return mDrivers.size();
+        }
+
+        @Override
+        public void onViewRecycled(DriverHolder holder) {
+            super.onViewRecycled(holder);
+            holder.reset();
         }
     }
 

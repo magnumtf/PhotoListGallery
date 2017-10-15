@@ -26,6 +26,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:typeface="normal"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
         android:text="@string/default_text_view"/>
 
     <View

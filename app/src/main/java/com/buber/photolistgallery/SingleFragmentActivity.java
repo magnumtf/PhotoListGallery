@@ -25,6 +25,8 @@ public abstract class SingleFragmentActivity extends AppCompatActivity {
     private FrameLayout mFragmentFrame;
     private boolean mMenuVisible;
     private Toolbar mTopToolBar;
+    public static final int TABLET_WIDTH = 1200;
+    public static final float PIC_HEIGHT_WIDTH_RATIO = 1.4142f;
 
     protected abstract Fragment createFragment();
 

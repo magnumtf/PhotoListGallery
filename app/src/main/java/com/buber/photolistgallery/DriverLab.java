@@ -28,6 +28,7 @@ public class DriverLab {
         String fname;
         String lname;
         String city = "Boston";
+        String url = "https://i.imgur.com/d5tqW7o.jpg";
         ArrayList<String> firstNames = new ArrayList<String>();
         ArrayList<String> lastNames = new ArrayList<String>();
 
@@ -74,6 +75,7 @@ public class DriverLab {
             rand = r.nextInt(51);
             driver.setRating((float)rand/10.0f);
             driver.setCaption(city);
+            driver.setUrl(url);
             mDrivers.add(driver);
         }
     }
