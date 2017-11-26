@@ -13,12 +13,38 @@
         android:textSize="18sp"
         android:text="@string/default_text_view"/>
 
-    <ImageView
-        android:id="@+id/fragment_photo_page_image_view"
+    <FrameLayout
+        android:id="@+id/fragment_photo_frame_layout"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        android:src="@drawable/betty_up_close"/>
+        android:layout_height="250dp">
+
+        <ImageView
+            android:id="@+id/fragment_photo_page_left_arrow_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:layout_gravity="left|center_vertical"
+            android:src="@drawable/arrow_left_resize100_tranny_r1"/>
+
+        <ImageView
+            android:id="@+id/fragment_photo_page_image_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:layout_gravity="center"
+            android:src="@drawable/betty_up_close"/>
+
+        <ImageView
+            android:id="@+id/fragment_photo_page_right_arrow_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:layout_gravity="right|center_vertical"
+            android:src="@drawable/arrow_right_resize100_tranny_r10_m1"/>
+
+    </FrameLayout>
 
     <TextView
         android:id="@+id/fragment_photo_page_text_detailed_message"

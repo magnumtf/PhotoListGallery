@@ -204,13 +204,14 @@ public class PhotoListGalleryFragment extends Fragment implements MenuVisible {
             String distance = driver.getDistanceFormatted();
             mDistanceTextView.setText(distance);
             mDriverId = driver.getId();
-            String url = driver.getUrl();
+            String url = driver.getThumbUrl();
             if (picasso != null) {
                 picasso.load(url)
                         .placeholder(R.drawable.betty_up_close)
                         .into(mItemImageView);
             }
             Log.d(TAG, "bindDriver(): Age = " + age + ". Rating = " + retRating + ". endStarIndex = " +  endStarNumber.toString() + ". Distance = " + distance);
+            Log.d(TAG, "bindDriver(): thumbUrl = " + url);
         }
 
         private void reset() {

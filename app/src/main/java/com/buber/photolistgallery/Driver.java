@@ -1,5 +1,10 @@
 package com.buber.photolistgallery;
 
+import android.util.Log;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 
@@ -8,6 +13,10 @@ import java.util.UUID;
  */
 
 public class Driver {
+    private static final String TAG = "Driver";
+    public static final int MAX_PHOTO_PAGE_IMAGES = 10;
+    private static final String PLACEHOLDER_URL = "https://i.redd.it/jzyq9v7s2saz.jpg";
+
     private int mId;
     private String mStageName;
     private float mRating;
@@ -15,15 +24,17 @@ public class Driver {
     private int mNumRatings;
     private Integer mAge;
     private float mDistance;
-    private int mThumbNail;
     private String mStatus;
     private int mPartStarResource;
     private String mCaption;
-    private String mUrl;
+    private String mThumbUrl;
     private String mFlickrId;
     private String mHeadline;
     private String mCity;
     private String mGender;
+    private int mNumImages;
+    private int mImageIndex;
+    private ArrayList<String> mImageUrls = new ArrayList<String>();
 
     public Driver() {
         // Generate non-unique identifier
@@ -32,6 +43,11 @@ public class Driver {
         mStatus = "ONLINE";  // should be an enum?
         mPartStarResource = R.drawable.ic_star_gold_full_rev1_cropped_scaled3a;
         mGender = "female";
+        for (int i = 0; i < MAX_PHOTO_PAGE_IMAGES; i++) {
+            mImageUrls.add(PLACEHOLDER_URL);
+        }
+        mNumImages = 0;
+        mImageIndex = 0;
     }
 
     public int getId() {
@@ -117,14 +133,6 @@ public class Driver {
         this.mDistance = distance;
     }
 
-    public int getThumbNail() {
-        return mThumbNail;
-    }
-
-    public void setThumbNail(int thumbNail) {
-        this.mThumbNail = thumbNail;
-    }
-
     public String getStatus() {
         return mStatus;
     }
@@ -146,11 +154,19 @@ public class Driver {
     }
 
     public String getUrl() {
-        return mUrl;
+        String url = "";
+        if (mImageIndex >= 0 && mImageIndex < mNumImages) {
+            url = mImageUrls.get(mImageIndex);
+        }
+        return url;
     }
 
-    public void setUrl(String url) {
-        this.mUrl = url;
+    public void setThumbUrl(String url) {
+        this.mThumbUrl = url;
+    }
+
+    public String getThumbUrl() {
+        return mThumbUrl;
     }
 
     public String getFlickrId() {
@@ -173,7 +189,7 @@ public class Driver {
         return mCity;
     }
 
-    public void setmCity(String city) {
+    public void setCity(String city) {
         this.mCity = city;
     }
 
@@ -181,7 +197,7 @@ public class Driver {
         return mGender;
     }
 
-    public void setmGender(String gender) {
+    public void setGender(String gender) {
         if (gender.startsWith("Male") || gender.startsWith("male") || gender.startsWith("MALE"))
             this.mGender = "male";
         else if (gender.startsWith("Tran") || gender.startsWith("tran") || gender.startsWith("TRAN"))
@@ -189,4 +205,87 @@ public class Driver {
         else
             this.mGender = "female";
     }
+
+    public void addImageUrl(String url) {
+        if (mNumImages < MAX_PHOTO_PAGE_IMAGES) {
+            mImageUrls.add(url);
+            mNumImages++;
+            if (mNumImages == 1) {
+                setThumbUrl(url);
+                Log.d(TAG, "addImageUrl(): not cool - " + url);
+            }
+        }
+    }
+
+    public void addImageUrl(String url, int index) {
+        if (mNumImages < MAX_PHOTO_PAGE_IMAGES && index < MAX_PHOTO_PAGE_IMAGES) {
+            mImageUrls.set(index, url);
+            if (index >= mNumImages)
+                mNumImages++;
+        }
+    }
+
+    public ArrayList<String> getImageUrlList() {
+        return mImageUrls;
+    }
+
+    public void setImageUrlList(String[] urlList) {
+        int i = 0;
+        for (String url : urlList) {
+            mImageUrls.add(i, url);
+            if (++i >= MAX_PHOTO_PAGE_IMAGES) {
+                break;
+            }
+        }
+        if (i > 0) {
+            mNumImages = i;
+        }
+    }
+
+    public void setImageUrlList(ArrayList<String> urlList) {
+        int i = 0;
+        for (String url : urlList) {
+            mImageUrls.add(i, url);
+            if (++i >= MAX_PHOTO_PAGE_IMAGES) {
+                break;
+            }
+        }
+        if (i > 0) {
+            mNumImages = i;
+        }
+    }
+
+    public String getImageUrl(int index) {
+        String retString = "";
+        if (index >= 0 && index < MAX_PHOTO_PAGE_IMAGES) {
+            try {
+                retString = mImageUrls.get(index);
+            } catch (ArrayIndexOutOfBoundsException e) {
+                System.err.println("Driver::getImageUrl: out of bounds Exception(" + index + ").");
+            }
+        }
+        else {
+            Log.d(TAG, "getImageUrl(): bad index: " + index);
+        }
+        return retString;
+    }
+
+    public void increaseIndex() {
+        mImageIndex++;
+        if (mImageIndex >= mNumImages) {
+            mImageIndex = 0;
+        }
+    }
+
+    public void decreaseIndex() {
+        mImageIndex--;
+        if (mImageIndex < 0) {
+            mImageIndex = mNumImages - 1;
+        }
+    }
+
+    public void resetIndex() {
+        mImageIndex = 0;
+    }
+
 }

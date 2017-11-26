@@ -95,7 +95,7 @@ public class FlickrFetchr {
                 continue;
             }
 
-            driver.setUrl(photoJsonObject.getString("url_s"));
+            driver.setThumbUrl(photoJsonObject.getString("url_s"));
             drivers.add(driver);
         }
     }

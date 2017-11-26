@@ -14,7 +14,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -31,6 +33,7 @@ public class PhotoPageFragment extends Fragment implements MenuVisible {
     private static final String ARG_URI = "photo_page_url";
     private static final String ARG_DRIVER_ID = "photo_page_driver_id";
     public static final float PHOTO_SCREEN_REDUCTION_FACTOR = 0.8f;
+    public static final int PHOTO_SCREEN_REDUCTION_PIXELS = 48;
     public static final float PHOTO_SCREEN_REDUCTION_FACTOR_TABLET = 0.7f;
     public static final float PHOTO_FRAGMENT_PIC_HEIGHT_FACTOR = 0.5f;
 
@@ -40,7 +43,10 @@ public class PhotoPageFragment extends Fragment implements MenuVisible {
     private TextView mMessageTextView;
     private TextView mCommentTextView;
     private ImageView mPhotoImageView;
+    private ImageView mLeftArrowView;
+    private ImageView mRightArrowView;
     private Button mChangeImageButton;
+    private FrameLayout mPhotoFrameLayout;
     private boolean mSetDefaultImage;
     private boolean mSafeMode;
     private boolean mMenuVisible;
@@ -50,6 +56,18 @@ public class PhotoPageFragment extends Fragment implements MenuVisible {
     private int mScreenHeight;
     private int mPicWidth;
     private int mPicHeight;
+    private View.OnClickListener rightArrowViewListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            onRightArrowClicked();
+        }
+    };
+    private View.OnClickListener leftArrowViewListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            onLeftArrowClicked();
+        }
+    };
 
     public static PhotoPageFragment newInstance(Uri uri, int driverId) {
         Bundle args = new Bundle();
@@ -82,6 +100,12 @@ public class PhotoPageFragment extends Fragment implements MenuVisible {
         mPhotoImageView = (ImageView) v
                 .findViewById(R.id.fragment_photo_page_image_view);
 
+        mLeftArrowView = (ImageView) v
+                .findViewById(R.id.fragment_photo_page_left_arrow_view);
+
+        mRightArrowView = (ImageView) v
+                .findViewById(R.id.fragment_photo_page_right_arrow_view);
+
         mChangeImageButton = (Button) v
                 .findViewById(R.id.btn_change_image);
 
@@ -93,6 +117,9 @@ public class PhotoPageFragment extends Fragment implements MenuVisible {
 
         mCommentTextView = (TextView) v
                 .findViewById(R.id.fragment_photo_page_text_comment);
+
+        mPhotoFrameLayout = (FrameLayout) v
+                .findViewById(R.id.fragment_photo_frame_layout);
 
         if (mDriver == null) {
             mNameTextView.setText(R.string.name_1);
@@ -110,6 +137,8 @@ public class PhotoPageFragment extends Fragment implements MenuVisible {
         mMessageTextView.setText(R.string.detailed_m_1);
         mCommentTextView.setText(R.string.comment_1);
 
+        mLeftArrowView.setOnClickListener(leftArrowViewListener);
+        mRightArrowView.setOnClickListener(rightArrowViewListener);
         mChangeImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
@@ -161,21 +190,32 @@ public class PhotoPageFragment extends Fragment implements MenuVisible {
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         mScreenHeight = displayMetrics.heightPixels;
         mScreenWidth = displayMetrics.widthPixels;
-        mPicWidth = (int)(PHOTO_SCREEN_REDUCTION_FACTOR * (float)mScreenWidth);
-        mPicHeight = (int)((float)mPicWidth * SingleFragmentActivity.PIC_HEIGHT_WIDTH_RATIO);
+        int frameHeight = mScreenHeight / 3;
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(mScreenWidth, frameHeight);
+//        mPhotoFrameLayout.setLayoutParams(lp);
+
         int maxPicHeight = (int)(PHOTO_FRAGMENT_PIC_HEIGHT_FACTOR * (float)mScreenHeight);
         if (mScreenWidth > SingleFragmentActivity.TABLET_WIDTH) {
             mPicWidth = (int)(PHOTO_SCREEN_REDUCTION_FACTOR_TABLET * (float)mScreenWidth);
-        } else if (mPicHeight > maxPicHeight)  {
-            mPicHeight = maxPicHeight;
-            if (mPicWidth > mPicHeight) {
-                mPicWidth *= PHOTO_SCREEN_REDUCTION_FACTOR;
+            mPicHeight = (int)((float)mPicWidth * SingleFragmentActivity.PIC_HEIGHT_WIDTH_RATIO);
+        }
+        else {
+            mPicWidth = mScreenWidth - (2 * PHOTO_SCREEN_REDUCTION_PIXELS);
+            mPicHeight = (int)((float)mPicWidth * SingleFragmentActivity.PIC_HEIGHT_WIDTH_RATIO);
+            if (mPicHeight > maxPicHeight) {
+                mPicWidth = mScreenWidth - (2 * PHOTO_SCREEN_REDUCTION_PIXELS);
+                mPicHeight = maxPicHeight;
+                if (mPicWidth > mPicHeight) {
+                    // maybe, but use below mPicWidth *= PHOTO_SCREEN_REDUCTION_FACTOR;
+                    mPicWidth = mPicHeight;
+                }
             }
         }
         String url = "";
         if (mDriver != null) {
             url = mDriver.getUrl();
         }
+        Log.d(TAG, "OnResume(): Screen Height = " + mScreenHeight + ". Screen Width = " + mScreenWidth + ". Pic Height = " + mPicHeight + ". Pic Width = " + mPicWidth);
         updateUI(url);
     }
 
@@ -183,6 +223,27 @@ public class PhotoPageFragment extends Fragment implements MenuVisible {
         mMenuVisible = menuVis;
     }
     // next set up listener and add a juicy image!
+
+    private void onLeftArrowClicked() {
+        Log.d(TAG, "onLeftArrowClicked() called");
+        String url = "";
+        if (mDriver != null) {
+            mDriver.decreaseIndex();
+            url = mDriver.getUrl();
+        }
+        updateUI(url);
+    }
+
+    private void onRightArrowClicked() {
+        Log.d(TAG, "onRightArrowClick() called");
+        String url = "";
+        if (mDriver != null) {
+            mDriver.increaseIndex();
+            url = mDriver.getUrl();
+        }
+        updateUI(url);
+    }
+
     private void updateUI(String url) {
         if (url.length() < 4) {
             mPhotoImageView.setImageResource(R.drawable.betty_up_close);
