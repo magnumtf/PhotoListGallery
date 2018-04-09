@@ -28,12 +28,14 @@ public class Driver {
     private int mPartStarResource;
     private String mCaption;
     private String mThumbUrl;
+    private String mHomeImageUrl;
     private String mFlickrId;
     private String mHeadline;
     private String mCity;
     private String mGender;
     private int mNumImages;
     private int mImageIndex;
+    private int mTestInt;
     private ArrayList<String> mImageUrls = new ArrayList<String>();
 
     public Driver() {
@@ -48,6 +50,8 @@ public class Driver {
         }
         mNumImages = 0;
         mImageIndex = 0;
+        mThumbUrl = "";
+        mHomeImageUrl = "";
     }
 
     public int getId() {
@@ -155,9 +159,15 @@ public class Driver {
 
     public String getUrl() {
         String url = "";
-        if (mImageIndex >= 0 && mImageIndex < mNumImages) {
+        if (mImageUrls.size() == 0 || mNumImages == 0) {
+            url = mHomeImageUrl;
+            Log.d(TAG, "getUrl(): Homepage = " + url);
+        } else if (mImageIndex >= 0 && mImageIndex < mNumImages) {
             url = mImageUrls.get(mImageIndex);
+            Log.d(TAG, "getUrl(): ArrayIndex(" + mImageIndex + ") = " + url);
         }
+        else
+            Log.d(TAG, "getUrl(): Empty = " + url + ". imageIndex = " + mImageIndex);
         return url;
     }
 
@@ -208,30 +218,47 @@ public class Driver {
 
     public void addImageUrl(String url) {
         if (mNumImages < MAX_PHOTO_PAGE_IMAGES) {
-            mImageUrls.add(url);
-            mNumImages++;
-            if (mNumImages == 1) {
-                setThumbUrl(url);
-                Log.d(TAG, "addImageUrl(): not cool - " + url);
+            if ((mNumImages == 0) && (mHomeImageUrl == "")) {
+                Log.d(TAG, "addImageUrl(): Set homeImage to " + url);
+                setHomeImageUrl(url);
+                mImageUrls.add(url);
+                mNumImages++;
+            } else if (mNumImages > 0) {
+                mImageUrls.add(url);
+                mNumImages++;
             }
         }
     }
 
     public void addImageUrl(String url, int index) {
+        boolean addImage = false;
         if (mNumImages < MAX_PHOTO_PAGE_IMAGES && index < MAX_PHOTO_PAGE_IMAGES) {
-            mImageUrls.set(index, url);
-            if (index >= mNumImages)
+            if ((index == 0) && (mHomeImageUrl == "")) {
+                Log.d(TAG, "addImageUrl(index): set homeImage to " + url);
+                setHomeImageUrl(url);
+                mImageUrls.set(index, url);
+                addImage = true;
+            } else if (index > 0) {
+                mImageUrls.set(index, url);
+                addImage = true;
+            }
+            if (addImage && (index >= mNumImages))
                 mNumImages++;
         }
-    }
-
-    public ArrayList<String> getImageUrlList() {
-        return mImageUrls;
     }
 
     public void setImageUrlList(String[] urlList) {
         int i = 0;
         for (String url : urlList) {
+            if (i == 0) {
+                if (mHomeImageUrl == "") {
+                    Log.d(TAG, "setImageUrlList(): set homeImage to " + url);
+                    setHomeImageUrl(url);
+                } else {
+                    mImageUrls.add(i, mHomeImageUrl);
+                    i++;
+                }
+            }
             mImageUrls.add(i, url);
             if (++i >= MAX_PHOTO_PAGE_IMAGES) {
                 break;
@@ -245,6 +272,15 @@ public class Driver {
     public void setImageUrlList(ArrayList<String> urlList) {
         int i = 0;
         for (String url : urlList) {
+            if (i == 0) {
+                if (mHomeImageUrl == "") {
+                    Log.d(TAG, "setImageUrlList()2: set homeImage to " + url);
+                    setHomeImageUrl(url);
+                } else {
+                    mImageUrls.add(i, mHomeImageUrl);
+                    i++;
+                }
+            }
             mImageUrls.add(i, url);
             if (++i >= MAX_PHOTO_PAGE_IMAGES) {
                 break;
@@ -253,6 +289,10 @@ public class Driver {
         if (i > 0) {
             mNumImages = i;
         }
+    }
+
+    public ArrayList<String> getImageUrlList() {
+        return mImageUrls;
     }
 
     public String getImageUrl(int index) {
@@ -288,4 +328,33 @@ public class Driver {
         mImageIndex = 0;
     }
 
+    public int getIndex() {
+        return mImageIndex;
+    }
+
+    public String getHomeImageUrl() {
+        return mHomeImageUrl;
+    }
+
+    public void setHomeImageUrl(String homeImageUrl) {
+        if (homeImageUrl.length() > 6) {
+            this.mHomeImageUrl = homeImageUrl;
+            Log.d(TAG, "setHomeImageUrl(): " + homeImageUrl);
+        }
+    }
+
+    public int getTestInt() {
+        return mTestInt;
+    }
+
+    public void setTestInt(int testInt) {
+        this.mTestInt = testInt;
+    }
+
+    public boolean havePicsDownloaded() {
+        if (mNumImages > 0) {
+            return true;
+        }
+        return false;
+    }
 }

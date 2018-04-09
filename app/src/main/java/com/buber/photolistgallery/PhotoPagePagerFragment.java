@@ -64,7 +64,7 @@ public class PhotoPagePagerFragment extends Fragment {
             @Override
             public void onClick(View arg0) {
                 if (mSetDefaultImage) {
-                    mPhotoImageView.setImageResource(R.drawable.betty_up_close);
+                    mPhotoImageView.setImageResource(R.drawable.original_resa);
                     mSetDefaultImage = false;
                     mPhotoTextView.setText(R.string.default_text_view);
                 } else {

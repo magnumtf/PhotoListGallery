@@ -7,6 +7,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -207,7 +208,7 @@ public class PhotoListGalleryFragment extends Fragment implements MenuVisible {
             String url = driver.getThumbUrl();
             if (picasso != null) {
                 picasso.load(url)
-                        .placeholder(R.drawable.betty_up_close)
+                        .placeholder(R.drawable.original_rev2a)
                         .into(mItemImageView);
             }
             Log.d(TAG, "bindDriver(): Age = " + age + ". Rating = " + retRating + ". endStarIndex = " +  endStarNumber.toString() + ". Distance = " + distance);

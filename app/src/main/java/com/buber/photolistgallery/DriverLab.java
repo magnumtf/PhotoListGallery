@@ -19,6 +19,7 @@ public class DriverLab {
     private static DriverLab sDriverLab;
     private List<Driver> mDrivers;
     private ArrayList<String> mPhotoPageUrls = new ArrayList<String>();
+    public static final int USE_BUBER_SERVER = 0;
     private String[] urlList1 = {
             "https://b.thumbs.redditmedia.com/KfAezmfpfhBT_NVTVQrSDvzQg9b1-WW-BoiWDbrSX3s.jpg",
             "https://i.redd.it/qip4hbse50yz.jpg",
@@ -39,20 +40,15 @@ public class DriverLab {
             "https://i.redd.it/t4ajudq03ppz.jpg"
     };
     private String[] urlList3 = {
-            "https://b.thumbs.redditmedia.com/x0-nBq8Er8PJvrdYwX7rDNQAUz7K6oeJbvLSY0QkP2o.jpg",
-            "https://i.redd.it/w7j21cv0e3zz.jpg",
-            "https://i.redd.it/qk9siprf35yz.jpg",
-            "https://i.redd.it/7e3295ql7fyz.jpg",
-            "https://i.redd.it/p3zs5ua9syyz.jpg",
-            "https://i.redd.it/bujd0vhkx6zz.jpg"
+            "https://b.thumbs.redditmedia.com/e8IJLYTI2ws2PMVoEXpUn1aGCsEx4QFjiQggZItEsdQ.jpg",
+            "https://i.redd.it/zjod12fxd5701.jpg",
+            "https://i.redd.it/977dlauqes501.jpg",
+            "https://i.redd.it/sbhpngkkpk401.jpg",
+            "https://i.redd.it/rv0znswwbk401.jpg",
+            "https://i.redd.it/idmv97zve5301.jpg",
+            "https://i.redd.it/6t5rhyhshy201.jpg",
+            "https://i.redd.it/b3fjjiircl101.jpg"
     };
-    private String[] urlList4 = {
-            "https://b.thumbs.redditmedia.com/Fet1jpLaR0loN_FX3BVB5lnCnJ4uO6QpgCODNCTDn9U.jpg",
-            "https://i.redd.it/jzyq9v7s2saz.jpg",
-            "https://i.redd.it/zw7n3gyleqkz.jpg",
-            "https://i.redd.it/t4ajudq03ppz.jpg"
-    };
-
 
     public static DriverLab get(Context context) {
         if (sDriverLab == null) {
@@ -94,7 +90,7 @@ public class DriverLab {
         lastNames.add("Precious");
         lastNames.add("Mother");
         lastNames.add("Longsnapper");
-
+        Log.d(TAG, "Start DriverLab");
         mDrivers = new ArrayList<>();
         for (int i = 0; i < 100; i++) {
             Driver driver = new Driver();
@@ -113,14 +109,15 @@ public class DriverLab {
             driver.setRating((float)rand/10.0f);
             driver.setCity(city);
             rand = r.nextInt(3);
+            driver.setTestInt(rand);
             if (rand == 0) {
-                setTestUrlArray(urlList1, driver, r);
+                setTestUrlArray(urlList1, driver);
                 // The first json call will return a list of thumb urls and medium home pic urls.
                 // when you click the List it will load the medium home pic urls and then download the list of medium urls.
             } else if (rand == 1) {
-                setTestUrlArray(urlList2, driver, r);
+                setTestUrlArray(urlList2, driver);
             } else {
-                setTestUrlArray(urlList3, driver, r);
+                setTestUrlArray(urlList3, driver);
             }
             mDrivers.add(driver);
             // each d should have it's own list of urls. Until you get ur server setup, use a random mix
@@ -167,6 +164,23 @@ public class DriverLab {
         d.setImageUrlList(urlArray);
     }
 
+    private void setTestUrlArray(String[] ar, Driver d) {
+        String[] urlArray = new String[ar.length-1];
+        int j = 0;
+        for (String url : ar) {
+            if (j == 0) {
+                d.setThumbUrl(url);
+                Log.d(TAG, "setTestUrlArray(): thumb = " + url);
+            } else if (j == 1) {
+                d.setHomeImageUrl(url);
+                Log.d(TAG, "setTestUrlArray(): homeImage = " + url);
+            } else {
+                break;
+            }
+            j++;
+        }
+    }
+
     // Implementing Fisher–Yates shuffle
     private void shuffleArray(String[] ar, Random rnd) {
         int index;
@@ -202,6 +216,25 @@ public class DriverLab {
             ar[swapIndex] = tempUrl;
             ar[0] = swapString;
         }
+    }
+
+    public String[] getTestUrlList(int listNum) {
+        String[] retArr;
+        switch (listNum) {
+            case 0:
+                retArr = urlList1;
+                break;
+            case 1:
+                retArr = urlList2;
+                break;
+            case 2:
+                retArr = urlList3;
+                break;
+            default:
+                retArr = urlList1;
+                break;
+        }
+        return retArr;
     }
 }
 
